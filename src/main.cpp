@@ -1070,7 +1070,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
-    CBigNum bnTargetLimit = IsProtocolV2(pindexLast->nHeight + 1) ? GetProofOfStakeLimit(pindexLast->nHeight) : bnProofOfWorkLimit;
+    CBigNum bnTargetLimit = fProofOfStake ? GetProofOfStakeLimit(pindexLast->nHeight) : bnProofOfWorkLimit;
 
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
