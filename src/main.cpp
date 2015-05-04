@@ -992,8 +992,7 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 
 static CBigNum GetProofOfStakeLimit(int nHeight)
 {
-	return bnProofOfStakeLimit;
-    //return bnProofOfStakeLimitV2;
+	return (IsProtocolV2(nHeight)) ? bnProofOfStakeLimitV2 : bnProofOfStakeLimit;
 }
 
 // miner's coin base reward
@@ -1057,7 +1056,7 @@ unsigned int ComputeMinWork(unsigned int nBase, int64_t nTime)
 //
 unsigned int ComputeMinStake(unsigned int nBase, int64_t nTime, unsigned int nBlockTime)
 {
-    return ComputeMaxBits(bnProofOfStakeLimit, nBase, nTime);
+    return ComputeMaxBits(bnProofOfStakeLimitV2, nBase, nTime);
 }
 
 
