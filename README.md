@@ -1,8 +1,5 @@
 BitSeeds
 ========
 
-The BitSeeds Profit Network is a revolutionary method designed to build a highly efficient business model on the blockchain that guarantees profit distribution from visionary product sales, services and enterprising crypto investments.
-
-http://bitseeds.co
-
-https://bitcointalk.org/index.php?topic=754055.0
+https://bitcointalk.org/index.php?topic=1028446
+htps:/bitseeds.org
