@@ -58,7 +58,7 @@ static const unsigned int MAX_TX_DATA_LEN = 5120; //5k limitation
 static const uint256 hashGenesisBlock("0x0000230b98f12b0b446e2bbdc6bfce04637fe7dc59f6edf399d8544bf639b898");
 static const uint256 hashGenesisBlockTestNet("0x000d03c97e9a4542ef7a32e5d8850efde6ee823b8476d18e7102ea872d82cf7c");
 
-inline bool IsProtocolV2(int nHeight) { return fTestNet || nHeight >= LAST_POW_BLOCK; }
+inline bool IsProtocolV2(int nHeight) { return fTestNet || nHeight > LAST_POW_BLOCK; }
 
 inline int64_t PastDrift(int64_t nTime, int nHeight) { return IsProtocolV2(nHeight) ? nTime : nTime - 15 * 60; }
 

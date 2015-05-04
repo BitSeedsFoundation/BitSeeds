@@ -85,7 +85,7 @@ extern enum Checkpoints::CPMode CheckpointsMode;
 
 // These functions dispatch to one or all registered wallets
 
-unsigned int GetStakeMinAge(int nHeight) { return IsProtocolV2(nHeight) ? nStakeMinAge : 60; }
+unsigned int GetStakeMinAge(int nHeight) { return IsProtocolV2(nHeight + 1) ? nStakeMinAge : 60; }
 
 
 void RegisterWallet(CWallet* pwalletIn)
@@ -1070,7 +1070,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
-    CBigNum bnTargetLimit = fProofOfStake ? GetProofOfStakeLimit(pindexLast->nHeight) : bnProofOfWorkLimit;
+    CBigNum bnTargetLimit = fProofOfStake ? GetProofOfStakeLimit(pindexLast->nHeight + 1) : bnProofOfWorkLimit;
 
     if (pindexLast == NULL)
         return bnTargetLimit.GetCompact(); // genesis block
@@ -1093,7 +1093,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     bnNew.SetCompact(pindexPrev->nBits);
     if (IsProtocolV2(pindexLast->nHeight))
     {
-    	nTargetTimespan *= 10; // Five minutes
+    	nTargetTimespan = 5 * 60; // Five minutes
     }
     int64_t nInterval = nTargetTimespan / nTargetSpacing;
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
