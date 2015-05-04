@@ -55,7 +55,11 @@ QString dateTimeStr(qint64 nTime)
 QFont bitcoinAddressFont()
 {
     QFont font("Monospace");
+#if QT_VERSION >= 0x040800
+    font.setStyleHint(QFont::Monospace);
+#else
     font.setStyleHint(QFont::TypeWriter);
+#endif
     return font;
 }
 
@@ -337,7 +341,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     return true;
 }
 
-#elif defined(LINUX)
+#elif defined(Q_OS_LINUX)
 
 // Follow the Desktop Application Autostart Spec:
 //  http://standards.freedesktop.org/autostart-spec/autostart-spec-latest.html
@@ -452,6 +456,59 @@ void HelpMessageBox::showOrPrint()
         // On other operating systems, print help text to console
         printToConsole();
 #endif
+}
+
+void SetBlackThemeQSS(QApplication& app)
+{
+    app.setStyleSheet("QWidget        { background-color: rgb(244,230,172); color: rgb(50,143,79); }"
+                      "QFrame         { border: none; }"
+                      "QComboBox      { background-color: rgb(255,255,255); color: rgb(50,143,79); }"
+                      "QComboBox QAbstractItemView::item { color: rgb(50,143,79); }"
+                      "QPushButton    { background-color: rgb(244,230,172); color: rgb(50,143,79); }"
+                      "QDoubleSpinBox { background-color: rgb(255,255,255); color: rgb(244,230,172); }"
+                      "QLineEdit      { background-color: rgb(80,120,83); color: rgb(244,230,172); }"
+                      "QTextEdit      { background-color: rgb(80,120,83); color: rgb(244,230,172); }"
+                      "QPlainTextEdit { background-color: rgb(80,120,83); color: rgb(244,230,172); }"
+                      "QMenuBar       { background-color: rgb(244,230,172); color: rgb(50,143,79); }"
+                      "QMenu          { background-color: rgb(169,162,79); color: rgb(50,143,79); }"
+                      "QMenuBar::item {background-color: transparent;}"
+                      "QMenu::item:selected { background-color: rgb(208,182,113); }"
+                      "QLabel         { color: rgb(50,143,79); }"
+                      "QLabel#label_5  { font-size:14pt; }"
+                      "QLabel#label_41  { font-size:14pt;}"
+                      "QLabel#label_11  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_15  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_19  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_12  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_16  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_20  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_13  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_17  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_21  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_14  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_10  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_22  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_29  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_18  { font-size:13pt; color:#328f4f; }"
+                      "QLabel#label_30  { font-size:13pt; color:#328f4f; }"
+                      "QScrollBar     { color: rgb(255,255,255); }"
+                      "QCheckBox      { color: rgb(120,127,139); }"
+                      "QRadioButton   { color: rgb(120,127,139); }"
+                      "QTabBar::tab   { color: rgb(50,143,79); border: 1px solid rgb(72,102,65); border-bottom: none; padding: 5px; }"
+                      "QTabBar::tab:selected  { background-color: rgb(244,230,172); }"
+                      "QTabBar::tab:!selected { background-color: rgb(208,182,113); margin-top: 2px; }"
+                      "QTabWidget::pane { border: 1px solid rgb(72,102,65); }"
+                      "QToolButton    { font-size: 12pt; background-color: rgb(208,182,113); color: rgb(61,61,61); border: none; margin-top: 5px; margin-bottom: 5px; }"
+                      "QToolButton:pressed { color: rgb(50,143,79); background : rgb(244,230,172) }"
+                      "QToolButton:hover { color: rgb(50,143,79); background : rgb(244,230,172) }"
+                      "QToolButton:checked { color: rgb(50,143,79); background : rgb(244,230,172) }"
+                      "QProgressBar   { color: rgb(61,61,61); border-color: rgb(255,255,255); border-width: 3px; border-style: solid; }"
+                      "QProgressBar::chunk { background-color: rgb(255,255,255); }"
+                      "QTreeView::item { background-color: rgb(255,255,255); }"
+                      "QTreeView::item:selected { background-color: rgb(244,230,172); }"
+                      "QTableView     { background-color: rgb(72,102,65); color: rgb(255,255,255); gridline-color: rgb(157,160,165); }"
+                      "QHeaderView::section { background-color: rgb(208,182,113); color: rgb(61,61,61); }"
+                      "QToolBar       { background-color: rgb(208,182,113); border: none; }");
 }
 
 } // namespace GUIUtil

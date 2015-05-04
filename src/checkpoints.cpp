@@ -11,6 +11,9 @@
 #include "main.h"
 #include "uint256.h"
 
+
+static const int nCheckpointSpan = 10;
+
 namespace Checkpoints
 {
     typedef std::map<int, uint256> MapCheckpoints;
@@ -24,19 +27,14 @@ namespace Checkpoints
     //
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
-        ( 0,      hashGenesisBlock )
-        ( 76263, uint256("0x0000000000000f207eb062a08302f68a275915f8d9fe7a97484c04c569923d8a") )
-        ( 76297, uint256("0x00000000000001c8f537fd0c248a8e26d59e374cc41b88eaf4655c4c8b186381") )
-        ( 76298, uint256("0x00000000000008eb7975058138dd6a9a386ced0b972326cb9ca0a233ee97a363") )
-        ( 76299, uint256("0x000000000000030a8fa2088fe24313bbc04f933246eca3ab8ce34fe3468e2812") )
-        ( 76300,  uint256("0x00000000000004c27a48e5820a6c74a2fe36cdc1aba41d5f54cf017c5984944f") )
- ;
+        ( 0,    hashGenesisBlock )
+    ;
 
     // TestNet has no checkpoints
     static MapCheckpoints mapCheckpointsTestnet =
         boost::assign::map_list_of
-        ( 0, hashGenesisBlockTestNet )
-        ;
+        ( 0,    hashGenesisBlockTestNet )
+    ;
 
     bool CheckHardened(int nHeight, const uint256& hash)
     {
@@ -194,7 +192,7 @@ namespace Checkpoints
     {
         const CBlockIndex *pindex = pindexBest;
         // Search backward for a block within max span and maturity window
-        while (pindex->pprev && (pindex->GetBlockTime() + CHECKPOINT_MAX_SPAN > pindexBest->GetBlockTime() || pindex->nHeight + 8 > pindexBest->nHeight))
+        while (pindex->pprev && (pindex->GetBlockTime() + nCheckpointSpan * GetTargetSpacing(nBestHeight) > pindexBest->GetBlockTime() || pindex->nHeight + nCheckpointSpan > pindexBest->nHeight))
             pindex = pindex->pprev;
         return pindex->GetBlockHash();
     }
@@ -347,7 +345,7 @@ namespace Checkpoints
         assert(mapBlockIndex.count(hashSyncCheckpoint));
         const CBlockIndex* pindexSync = mapBlockIndex[hashSyncCheckpoint];
         return (nBestHeight >= pindexSync->nHeight + nCoinbaseMaturity ||
-                pindexSync->GetBlockTime() + nStakeMinAge < GetAdjustedTime());
+                pindexSync->GetBlockTime() + GetStakeMinAge(nBestHeight) < GetAdjustedTime());
     }
 }
 

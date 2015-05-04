@@ -1,22 +1,22 @@
 #!/bin/bash
-export STAGING=$HOME/bitseeds_staging
-export OUTDIR=$HOME/bitseeds_out
-export DEPSDIRT=$HOME/bitseeds_deps
+export STAGING=$HOME/bitseeds_build/bitseeds_staging
+export OUTDIR=$HOME/bitseeds_build/bitseeds_out
+export DEPSDIRT=$HOME/bitseeds_build/bitseeds_deps
 export HOST=i686-w64-mingw32
 export MAKEOPTS="-j4"                           # set to the number of cores you have on the machine
 
 
 set -e
 
-mkdir $DEPSDIRT/qt
+#mkdir $DEPSDIRT/qt
 cd $DEPSDIRT/qt
-export INSTDIR="$HOME/qt/"
-mkdir $INSTDIR
+export INSTDIR="$HOME/qt"
+#mkdir $INSTDIR
 mkdir -p $INSTDIR/host/bin
-wget http://pkgs.fedoraproject.org/repo/pkgs/qt/qt-everywhere-opensource-src-4.8.3.tar.gz/a663b6c875f8d7caa8ac9c30e4a4ec3b/qt-everywhere-opensource-src-4.8.3.tar.gz
-unzip $OUTDIR/bitseeds-deps-win32-gitian-r9.zip
+#wget http://pkgs.fedoraproject.org/repo/pkgs/qt/qt-everywhere-opensource-src-4.8.3.tar.gz/a663b6c875f8d7caa8ac9c30e4a4ec3b/qt-everywhere-opensource-src-4.8.3.tar.gz
+#unzip $OUTDIR/bitseeds-deps-win32-gitian-r9.zip
 DEPSDIR=`pwd`
-tar xzf qt-everywhere-opensource-src-4.8.3.tar.gz
+#tar xzf qt-everywhere-opensource-src-4.8.3.tar.gz
 cd qt-everywhere-opensource-src-4.8.3
 sed 's/$TODAY/2011-01-30/' -i configure
 sed "s/i686-pc-mingw32-/$HOST-/" -i mkspecs/unsupported/win32-g++-cross/qmake.conf
@@ -26,7 +26,7 @@ sed 's/QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads/QMAKE_LFLAGS_EXCEPTIONS_ON = -lmin
 sed --posix "s/QMAKE_MOC\t\t= $HOST-moc/QMAKE_MOC\t\t= moc/" -i mkspecs/unsupported/win32-g++-cross/qmake.conf
 sed --posix "s/QMAKE_RCC\t\t= $HOST-rcc/QMAKE_RCC\t\t= rcc/" -i mkspecs/unsupported/win32-g++-cross/qmake.conf
 sed --posix "s/QMAKE_UIC\t\t= $HOST-uic/QMAKE_UIC\t\t= uic/" -i mkspecs/unsupported/win32-g++-cross/qmake.conf
-OPENSSL_LIBS="-L$DEPSDIR/lib -lssl -lcrypto -lgdi32" ./configure -prefix $INSTDIR -bindir $INSTDIR/host/bin -I $DEPSDIR/include -confirm-license -release -opensource -static -no-qt3support -xplatform unsupported/win32-g++-cross -no-multimedia -no-audio-backend -no-phonon -no-phonon-backend -no-declarative -no-script -no-scripttools -no-javascript-jit -no-webkit -no-svg -no-xmlpatterns -no-sql-sqlite -no-nis -no-cups -no-iconv -no-dbus -no-gif -no-libtiff -no-opengl -nomake examples -nomake demos -nomake docs -no-feature-style-plastique -no-feature-style-cleanlooks -no-feature-style-motif -no-feature-style-cde -no-feature-style-windowsce -no-feature-style-windowsmobile -no-feature-style-s60 -openssl-linked
+OPENSSL_LIBS="-L$DEPSDIR/lib -lssl -lcrypto -lgdi32" ./configure -prefix $INSTDIR -bindir $INSTDIR/host/bin -I $DEPSDIR/include -confirm-license -release -opensource -static -no-qt3support -xplatform unsupported/win32-g++-cross -no-multimedia -no-audio-backend -no-phonon -no-phonon-backend -no-declarative -no-script -no-scripttools -no-javascript-jit -no-svg -no-xmlpatterns -no-sql-sqlite -no-nis -no-cups -no-iconv -no-dbus -no-gif -no-libtiff -no-opengl -nomake examples -nomake demos -nomake docs -no-feature-style-plastique -no-feature-style-cleanlooks -no-feature-style-motif -no-feature-style-cde -no-feature-style-windowsce -no-feature-style-windowsmobile -no-feature-style-s60 -openssl-linked
 find . -name *.prl | xargs -l sed 's|/\.||' -i
 find . -name *.prl | xargs -l sed 's|/$||' -i
 make $MAKEOPTS install

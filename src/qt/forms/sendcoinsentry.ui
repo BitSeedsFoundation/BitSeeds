@@ -90,7 +90,7 @@
      <item>
       <widget class="QValidatedLineEdit" name="payTo">
        <property name="toolTip">
-        <string>The address to send the payment to  (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</string>
+        <string>The address to send the payment to  (e.g. A8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</string>
        </property>
        <property name="maxLength">
         <number>34</number>
@@ -99,6 +99,12 @@
      </item>
      <item>
       <widget class="QToolButton" name="addressBookButton">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string>Choose address from address book</string>
        </property>
@@ -116,6 +122,12 @@
      </item>
      <item>
       <widget class="QToolButton" name="pasteButton">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string>Paste address from clipboard</string>
        </property>
@@ -133,6 +145,12 @@
      </item>
      <item>
       <widget class="QToolButton" name="deleteButton">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string>Remove this recipient</string>
        </property>
